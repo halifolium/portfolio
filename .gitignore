@@ -33,6 +33,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Old files (migrated to Next.js)
+/source/
+/index.html
+/404.html
+/sw.js
+/manifest.json
+
 # IDE
 .vscode/
 .idea/
