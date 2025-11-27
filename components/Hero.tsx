@@ -6,38 +6,71 @@ import TypingAnimation from './TypingAnimation';
 
 export default function Hero() {
   useEffect(() => {
-    if (typeof window === 'undefined' || typeof (window as any).anime === 'undefined') return;
+    if (typeof window === 'undefined') return;
 
-    const heroContent = document.querySelector('.hero-content');
-    if (!heroContent) return;
+    const initAnimations = () => {
+      if (typeof (window as any).anime === 'undefined') {
+        // Fallback: если anime.js не загружен, просто показываем элементы
+        setTimeout(() => {
+          const elements = document.querySelectorAll('.hero-greeting, .hero-title, .hero-subtitle, .hero-cta .btn');
+          elements.forEach((el) => {
+            (el as HTMLElement).style.opacity = '1';
+            (el as HTMLElement).style.transform = 'translateY(0)';
+          });
+        }, 100);
+        return;
+      }
 
-    (window as any).anime.timeline({ easing: 'easeOutExpo' })
-      .add({
-        targets: '.hero-greeting',
-        opacity: [0, 1],
-        translateY: [30, 0],
-        duration: 1000,
-      })
-      .add({
-        targets: '.hero-title',
-        opacity: [0, 1],
-        translateY: [50, 0],
-        duration: 1200,
-      }, '-=600')
-      .add({
-        targets: '.hero-subtitle',
-        opacity: [0, 1],
-        translateY: [30, 0],
-        duration: 1000,
-      }, '-=800')
-      .add({
-        targets: '.hero-cta .btn',
-        opacity: [0, 1],
-        translateY: [20, 0],
-        scale: [0.9, 1],
-        delay: (window as any).anime.stagger(150),
-        duration: 800,
-      }, '-=600');
+      const heroContent = document.querySelector('.hero-content');
+      if (!heroContent) return;
+
+      (window as any).anime.timeline({ easing: 'easeOutExpo' })
+        .add({
+          targets: '.hero-greeting',
+          opacity: [0, 1],
+          translateY: [30, 0],
+          duration: 1000,
+        })
+        .add({
+          targets: '.hero-title',
+          opacity: [0, 1],
+          translateY: [50, 0],
+          duration: 1200,
+        }, '-=600')
+        .add({
+          targets: '.hero-subtitle',
+          opacity: [0, 1],
+          translateY: [30, 0],
+          duration: 1000,
+        }, '-=800')
+        .add({
+          targets: '.hero-cta .btn',
+          opacity: [0, 1],
+          translateY: [20, 0],
+          scale: [0.9, 1],
+          delay: (window as any).anime.stagger(150),
+          duration: 800,
+        }, '-=600');
+    };
+
+    // Проверяем, загружен ли anime.js, если нет - ждем
+    if (typeof (window as any).anime !== 'undefined') {
+      initAnimations();
+    } else {
+      // Ждем загрузки anime.js
+      const checkAnime = setInterval(() => {
+        if (typeof (window as any).anime !== 'undefined') {
+          clearInterval(checkAnime);
+          initAnimations();
+        }
+      }, 100);
+
+      // Fallback через 2 секунды
+      setTimeout(() => {
+        clearInterval(checkAnime);
+        initAnimations();
+      }, 2000);
+    }
 
     // Hero image hover animation
     const heroSection = document.querySelector('.hero');

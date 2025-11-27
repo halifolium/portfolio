@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Outfit, JetBrains_Mono } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
@@ -24,13 +24,14 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://halifolium.com'),
   title: 'Halifolium - Creative Developer & Designer',
   description: 'Creative developer passionate about building beautiful, functional web experiences. Portfolio of Halifolium.',
   keywords: ['web developer', 'designer', 'portfolio', 'frontend', 'react', 'vue', 'javascript'],
   authors: [{ name: 'Halifolium' }],
   openGraph: {
     type: 'website',
-    url: 'https://halifolium.com/',
+    url: '/',
     title: 'Halifolium - Creative Developer & Designer',
     description: 'Creative developer passionate about building beautiful, functional web experiences.',
     images: [{ url: '/img/og-image.jpg' }],
@@ -42,7 +43,6 @@ export const metadata: Metadata = {
     images: ['/img/og-image.jpg'],
   },
   manifest: '/manifest.json',
-  themeColor: '#f4a5b8',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
@@ -51,6 +51,10 @@ export const metadata: Metadata = {
     icon: '/img/favicon.svg',
     apple: '/img/apple-touch-icon.png',
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#f4a5b8',
 };
 
 export default function RootLayout({

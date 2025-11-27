@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 const testimonials = [
   {
@@ -56,7 +56,7 @@ export default function Testimonials() {
     observer.observe(section);
   }, []);
 
-  const showCard = (index: number) => {
+  const showCard = useCallback((index: number) => {
     if (isAnimating || index === currentIndex) return;
     setIsAnimating(true);
 
@@ -90,7 +90,7 @@ export default function Testimonials() {
         },
       });
     }
-  };
+  }, [isAnimating, currentIndex]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -104,7 +104,7 @@ export default function Testimonials() {
     if (!isAnimating) {
       showCard(currentIndex);
     }
-  }, [currentIndex]);
+  }, [currentIndex, isAnimating, showCard]);
 
   return (
     <section id="testimonials" className="testimonials-section">

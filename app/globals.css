@@ -1029,9 +1029,12 @@ main .container {
 /* Контент */
 .hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     text-align: center;
     padding: var(--space-10);
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .hero-greeting {
@@ -1620,20 +1623,170 @@ section p {
    ============================================ */
 
 footer {
-    background: var(--bg-card);
+    background: linear-gradient(
+        180deg,
+        var(--bg-primary) 0%,
+        var(--bg-secondary) 100%
+    );
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-top: 1px solid var(--border-subtle);
-    padding: var(--space-6) 0;
+    padding: var(--space-8) 0 var(--space-6);
     text-align: center;
     position: relative;
     z-index: 1;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--accent-primary),
+        var(--accent-secondary),
+        var(--accent-primary),
+        transparent
+    );
+    opacity: 0.6;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+.footer-decoration-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--accent-secondary) 20%,
+        var(--accent-primary) 50%,
+        var(--accent-secondary) 80%,
+        transparent 100%
+    );
+    opacity: 0.5;
 }
 
 footer .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--space-6);
+    position: relative;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.footer-sakura {
+    display: flex;
+    gap: var(--space-2);
+    font-size: 1.2em;
+    opacity: 0.7;
+    animation: float 3s ease-in-out infinite;
+}
+
+.footer-sakura:nth-child(1) span:nth-child(1),
+.footer-sakura:nth-child(3) span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.footer-sakura:nth-child(1) span:nth-child(2),
+.footer-sakura:nth-child(3) span:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.footer-sakura:nth-child(1) span:nth-child(3),
+.footer-sakura:nth-child(3) span:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(5deg);
+    }
+}
+
+.footer-text {
+    color: var(--text-primary);
+    font-size: var(--text-base);
+    margin: 0;
+    font-family: var(--font-sans);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    flex-wrap: wrap;
+    line-height: 1.6;
+}
+
+.footer-copyright {
+    font-weight: 500;
+    background: linear-gradient(
+        135deg,
+        var(--accent-primary),
+        var(--accent-secondary)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.footer-heart-wrapper {
+    color: var(--text-primary);
+}
+
+.footer-rights {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    font-family: var(--font-mono);
+}
+
+.footer-divider {
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--border-default),
+        transparent
+    );
+    margin: var(--space-4) auto;
+    opacity: 0.5;
+}
+
+.footer-tagline {
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    margin: 0;
+    font-family: var(--font-mono);
+    font-style: italic;
+    opacity: 0.8;
+    letter-spacing: 0.5px;
 }
 
 footer p {
@@ -1666,13 +1819,13 @@ footer p {
 
 /* Летящие сердечки */
 .flying-heart {
-    position: absolute;
+    position: fixed;
     left: 50%;
     top: 50%;
     font-size: 1.2em;
     pointer-events: none;
     will-change: transform, opacity;
-    z-index: 100;
+    z-index: 9999;
     filter: drop-shadow(0 2px 6px rgba(244, 165, 184, 0.5));
     transform-origin: center center;
 }
@@ -1856,7 +2009,39 @@ footer p {
     
     /* Футер мобильный */
     footer {
-        padding: var(--space-5) 0;
+        padding: var(--space-6) 0 var(--space-4);
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+    
+    .footer-sakura {
+        font-size: 1em;
+        order: -1;
+    }
+    
+    .footer-text {
+        font-size: var(--text-sm);
+        flex-direction: column;
+        gap: var(--space-2);
+    }
+    
+    .footer-copyright,
+    .footer-heart-wrapper,
+    .footer-rights {
+        display: block;
+    }
+    
+    .footer-divider {
+        width: 60px;
+        margin: var(--space-3) auto;
+    }
+    
+    .footer-tagline {
+        font-size: var(--text-xs);
+        padding: 0 var(--space-4);
     }
     
     footer p {
