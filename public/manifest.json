@@ -1,0 +1,25 @@
+{
+  "name": "Halifolium Portfolio",
+  "short_name": "Halifolium",
+  "description": "Creative Developer & Designer Portfolio",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0c10",
+  "theme_color": "#f4a5b8",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "source/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "source/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+
